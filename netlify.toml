@@ -1,0 +1,7 @@
+# Netlify конфигурация за статичен Next.js експорт.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
