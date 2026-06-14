@@ -1,0 +1,24 @@
+<!--
+  Статичен detection файл за Netlify Forms.
+  Netlify сканира HTML на билда за форми. Тъй като реалната форма се рендира
+  от React, този файл гарантира надеждно разпознаване на формата "contact"
+  с всичките ѝ полета. Не се показва на потребители.
+-->
+<!DOCTYPE html>
+<html lang="bg">
+  <head>
+    <meta charset="utf-8" />
+    <title>Netlify Forms</title>
+  </head>
+  <body>
+    <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="organization" />
+      <select name="serviceType"></select>
+      <textarea name="message"></textarea>
+    </form>
+  </body>
+</html>
