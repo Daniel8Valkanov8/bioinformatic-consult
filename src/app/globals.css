@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
+/*
+  Дизайн система — графитено/въглеродно тъмна основа.
+  Акценти: светло сиво + бяло за текст; редки bio (cyan/green) детайли.
+  Всички цветове са изложени като Tailwind токени през @theme,
+  напр. bg-surface, text-muted, text-bio, border-line.
+*/
+@theme {
+  /* Фон и повърхности — графит, не чисто черно */
+  --color-carbon: #0d1117;
+  --color-surface: #161b22;
+  --color-surface-2: #1c232c;
+  --color-line: #2a323d;
+
+  /* Текст */
+  --color-fg: #f2f5f8;
+  --color-muted: #aab3bf;
+  --color-faint: #6b7785;
+
+  /* Bio акценти — пестеливо */
+  --color-bio: #4fe0c4; /* био-циан/зелено */
+  --color-bio-soft: #2bb89e;
+
+  /* Шрифтове (свързани в layout.tsx) */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  /* Компенсира фиксираната навигация при скрол към секции с #id */
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-carbon);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Финна био "решетка"/мрежа за акцентни повърхности (ДНК/микро мотив) */
+.bio-grid {
+  background-image:
+    linear-gradient(to right, rgba(79, 224, 196, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(79, 224, 196, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* Меко свечение зад акцентни елементи */
+.bio-glow {
+  background: radial-gradient(
+    60% 60% at 50% 40%,
+    rgba(79, 224, 196, 0.14) 0%,
+    transparent 70%
+  );
+}
+
+::selection {
+  background: rgba(79, 224, 196, 0.25);
+  color: var(--color-fg);
 }
