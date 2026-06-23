@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { Container } from "./Container";
 
 /** Секция със стандартен вертикален ритъм и опционален #id за навигация. */
@@ -14,7 +14,7 @@ export function Section({
   containerClassName?: string;
 }) {
   return (
-    <section id={id} className={`py-20 sm:py-28 ${className}`}>
+    <section id={id} className={`py-12 sm:py-14 ${className}`}>
       <Container className={containerClassName}>{children}</Container>
     </section>
   );
@@ -35,14 +35,29 @@ export function SectionHeader({
   return (
     <div className={`max-w-3xl ${centered ? "mx-auto text-center" : ""}`}>
       {eyebrow && (
-        <p className="mb-3 font-mono text-sm uppercase tracking-[0.2em] text-bio">
+        <p
+          data-reveal
+          className="mb-3 font-mono text-sm uppercase tracking-[0.2em] text-signal"
+        >
           {eyebrow}
         </p>
       )}
-      <h2 className="text-balance text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+      <h2
+        data-reveal
+        style={{ "--reveal-delay": "80ms" } as CSSProperties}
+        className="text-balance font-display text-3xl font-bold tracking-tight text-fg sm:text-4xl"
+      >
         {title}
       </h2>
-      {lead && <p className="mt-4 text-lg leading-relaxed text-muted">{lead}</p>}
+      {lead && (
+        <p
+          data-reveal
+          style={{ "--reveal-delay": "150ms" } as CSSProperties}
+          className="mt-4 text-lg leading-relaxed text-muted"
+        >
+          {lead}
+        </p>
+      )}
     </div>
   );
 }

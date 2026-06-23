@@ -1,10 +1,24 @@
 @import "tailwindcss";
 
 /*
-  Дизайн система — графитено/въглеродно тъмна основа.
-  Акценти: светло сиво + бяло за текст; редки bio (cyan/green) детайли.
-  Всички цветове са изложени като Tailwind токени през @theme,
-  напр. bg-surface, text-muted, text-bio, border-line.
+  Дизайн система — „Биология × Софтуер", направено видимо.
+  --------------------------------------------------------------------------
+  База: графитено-въглеродно тъмно (остава, пасва на scroll-video фона).
+
+  Акцентната логика НЕ е произволен нео-циан, а base-call кодът на
+  секвенирането — реалната визуална азбука на субекта (IGV/Sanger). Така
+  цветът носи смисъл, разпознаваем за всяка геномна лаборатория:
+
+    дуо-тон, който кодира самия eyebrow „Биология × Софтуер":
+      • signal (цитозин-синьо) = действие / софтуер / връзки
+      • helix  (аденин-зелено) = възпроизводимо / верифицирано / биология
+
+    пълният ATGC код (--color-base-*) се появява САМО там, където на екрана
+    има реална нуклеотидна секвенция.
+
+  Токените са изложени като Tailwind утилити през @theme: text-signal,
+  bg-helix, border-line, text-base-a … Legacy `bio*` токени са оставени като
+  псевдоними, за да останат вътрешните страници консистентни.
 */
 @theme {
   /* Фон и повърхности — графит, не чисто черно */
@@ -18,13 +32,26 @@
   --color-muted: #aab3bf;
   --color-faint: #6b7785;
 
-  /* Bio акценти — пестеливо */
-  --color-bio: #4fe0c4; /* био-циан/зелено */
-  --color-bio-soft: #2bb89e;
+  /* Дуо-тон акценти */
+  --color-signal: #4d9bff; /* цитозин-синьо — действие/софтуер */
+  --color-signal-soft: #3f86e8;
+  --color-helix: #3fd17e; /* аденин-зелено — възпроизводимо/верифицирано */
+  --color-helix-soft: #2bb869;
+
+  /* Пълен base-call код (само за реални секвенции) */
+  --color-base-a: #3fd17e; /* A — аденин */
+  --color-base-t: #f2645a; /* T — тимин */
+  --color-base-g: #e8a33d; /* G — гуанин */
+  --color-base-c: #4d9bff; /* C — цитозин */
+
+  /* Legacy псевдоними (вътрешни страници ползват bio*) → signal */
+  --color-bio: #4d9bff;
+  --color-bio-soft: #3f86e8;
 
   /* Шрифтове (свързани в layout.tsx) */
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-sans: var(--font-onest), system-ui, sans-serif;
+  --font-display: var(--font-onest), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
 :root {
@@ -35,33 +62,241 @@ html {
   scroll-behavior: smooth;
   /* Компенсира фиксираната навигация при скрол към секции с #id */
   scroll-padding-top: 5rem;
+  /* Базов фон (резервен под видео фона) */
+  background-color: var(--color-carbon);
 }
 
 body {
-  background-color: var(--color-carbon);
+  /* Прозрачен, за да прозира фиксираният видео фон (VideoBackground) */
+  background-color: transparent;
   color: var(--color-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Финна био "решетка"/мрежа за акцентни повърхности (ДНК/микро мотив) */
+/* Финна решетка за акцентни повърхности — синкав (софтуерен) тон */
 .bio-grid {
   background-image:
-    linear-gradient(to right, rgba(79, 224, 196, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(79, 224, 196, 0.06) 1px, transparent 1px);
+    linear-gradient(to right, rgba(77, 155, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(77, 155, 255, 0.06) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
-/* Меко свечение зад акцентни елементи */
+/* Меко свечение зад акцентни елементи — дуо-тон (синьо → зелено) */
 .bio-glow {
-  background: radial-gradient(
-    60% 60% at 50% 40%,
-    rgba(79, 224, 196, 0.14) 0%,
-    transparent 70%
-  );
+  background:
+    radial-gradient(
+      52% 56% at 32% 30%,
+      rgba(77, 155, 255, 0.16) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      48% 52% at 74% 68%,
+      rgba(63, 209, 126, 0.12) 0%,
+      transparent 72%
+    );
 }
 
 ::selection {
-  background: rgba(79, 224, 196, 0.25);
+  background: rgba(77, 155, 255, 0.28);
   color: var(--color-fg);
+}
+
+/* Видим клавиатурен фокус за целия сайт (качествен под за достъпност) */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/*
+  Сигнатурен елемент: provenance панелът „детерминизъм, направен видим".
+  Тънък скенлайн-блясък, който минава веднъж при зареждане — намек за
+  „инструментален отчет", без шумна анимация.
+*/
+@keyframes prov-scan {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.9;
+  }
+  60%,
+  100% {
+    transform: translateY(540%);
+    opacity: 0;
+  }
+}
+
+.prov-scan {
+  animation: prov-scan 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s 1 both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prov-scan {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   ПРЕЗЕНТАЦИОННА ХОРЕОГРАФИЯ
+   --------------------------------------------------------------------------
+   Сайтът се „чете като секвенционен прочит": ДНК фонът се скролва, а
+   съдържанието се „фокусира в кадър" при влизане. Всичко е CSS + един
+   IntersectionObserver (MotionProvider). Без библиотеки, без 3D.
+
+   Прогресивно подобрение: класовете се активират само когато JS добави
+   `reveal-root`/`snap` към <html>. Без JS → съдържанието е видимо, без snap.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   ХОРИЗОНТАЛНА ПРЕЗЕНТАЦИЯ (само на home; активира се от HorizontalDeck)
+   Всяка секция е цял „слайд". Минималното скролване прескача към следващия,
+   без междинно положение (x mandatory). Скролбарът е скрит. Вертикалната
+   страница е заключена и глобалният footer се скрива (контактите са в
+   последния слайд).
+   -------------------------------------------------------------------------- */
+/* Десктоп: заключваме вертикалния скрол (декът скролва хоризонтално).
+   На телефон НЕ заключваме — там ползваме нативния document скрол. */
+@media (min-width: 768px) {
+  html.home-deck body {
+    overflow: hidden;
+  }
+}
+html.home-deck footer {
+  display: none;
+}
+
+.deck {
+  display: flex;
+  /* Детерминирана височина (навбарът е h-16 = 4rem), за да не зависи от
+     резолюцията на flex проценти надолу по веригата. */
+  height: calc(100svh - 4rem);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior: contain;
+  scrollbar-width: none; /* Firefox — скрит скрол */
+  /* Лек 3D: дава дълбочина на завъртането на слайдовете (HorizontalDeck). */
+  perspective: 1700px;
+  perspective-origin: center center;
+}
+
+/* Телефон: декът става ВЕРТИКАЛЕН — фиксиран изглед, секциите се „прищракват"
+   една по една при вертикален скрол (без междинно положение). */
+@media (max-width: 767px) {
+  /* Телефон: НАТИВЕН document скрол (най-надеждният тъч) + snap на ниво
+     документ. Декът е обикновен блок; всяка секция е цял екран и се
+     „прищраква" (фиксиран изглед, без вложени скрол-контейнери). */
+  html.home-deck {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 4rem; /* колкото навбара (h-16) */
+  }
+  .deck {
+    display: block;
+    height: auto;
+    overflow: visible;
+    perspective: none; /* без 3D на телефон — по-леко */
+  }
+  .deck .slide {
+    height: calc(100svh - 4rem); /* цял екран под навбара */
+    overflow: hidden; /* документът скролва, не слайдът → тъчът е надежден */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+.deck::-webkit-scrollbar {
+  display: none; /* WebKit — скрит скрол */
+}
+
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  /* авто-побирането (slide-fit) обикновено премахва прелива; auto е безопасен
+     резерв, ако zoom не се поддържа — скрол вместо отрязване */
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  /* центрира съдържанието, но пада към „start", ако слайдът прелива (без отрязан връх) */
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  /* 3D: завъртането (rotateY) се прилага инлайн от HorizontalDeck. */
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.slide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Единен вертикален ритъм за дека; долният падинг резервира място за рейла,
+   за да не го застъпва съдържанието. (.deck .slide надделява над utility
+   падингите на секциите.) */
+.deck .slide {
+  padding-top: 1.25rem;
+  padding-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+  .deck .slide {
+    padding-bottom: 4.5rem; /* място за долния навигатор */
+  }
+}
+
+/* Авто-побиране: HorizontalDeck свива този контейнер с точния коефициент,
+   за да се събере слайдът на всяка височина (вкл. при OS мащабиране). */
+.slide-fit {
+  transform-origin: top center;
+}
+
+/* Тъмен прозрачен воал за всяка секция → текстът се откроява над ДНК-то */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 11, 16, 0.88) 0%,
+    rgba(8, 11, 16, 0.76) 100%
+  );
+}
+.slide > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Влизане: съдържанието се „установява" в кадър с лек подем + settle. */
+.reveal-root [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  transition:
+    opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-root [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Странична посока за елементи, които влизат отстрани (напр. hero визуалът). */
+.reveal-root [data-reveal][data-reveal-x] {
+  transform: translateX(34px) scale(0.985);
+}
+.reveal-root [data-reveal][data-reveal-x].is-in {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-root [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

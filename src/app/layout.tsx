@@ -1,58 +1,50 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Onest, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { bg } from "@/content/bg";
+import { VideoBackground } from "@/components/VideoBackground";
+import { en } from "@/content/en";
 import { site } from "@/lib/site";
 
-const inter = Inter({
-  variable: "--font-inter",
+// Onest — кирилица-native гротеск (дисплей + основен текст). Умишлено НЕ Inter.
+const onest = Onest({
+  variable: "--font-onest",
   subsets: ["latin", "cyrillic"],
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
+// IBM Plex Mono — техническият слой (eyebrow, код, секвенции). Има кирилица.
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: bg.meta.home.title,
-    template: `%s | ${site.name}`,
-  },
-  description: bg.meta.home.description,
+  // Английският е по подразбиране; per-page metadata презаписва заглавие/описание.
+  title: en.meta.home.title,
+  description: en.meta.home.description,
   keywords: [
-    "биоинформатика",
-    "биоинформатичен консултант",
-    "метагеномика",
-    "NGS анализ",
+    "bioinformatics",
+    "bioinformatics consultant",
+    "metagenomics",
+    "NGS analysis",
     "16S",
     "ITS",
-    "секвениране",
+    "sequencing",
     "WES",
     "Nextflow",
-    "България",
   ],
   authors: [{ name: site.name }],
   openGraph: {
     type: "website",
-    locale: site.locale,
-    siteName: site.shortName,
-    title: bg.meta.home.title,
-    description: bg.meta.home.description,
-    url: site.url,
+    siteName: site.name,
+    title: en.meta.home.title,
+    description: en.meta.home.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: bg.meta.home.title,
-    description: bg.meta.home.description,
-  },
-  alternates: {
-    canonical: "/",
   },
 };
 
@@ -61,15 +53,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // lang="en" по подразбиране; за /bg/ страниците се коригира client-side в
+  // LocaleProvider (document.documentElement.lang). Статичен експорт не позволява
+  // per-route <html> при общ root layout.
   return (
     <html
-      lang="bg"
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full`}
+      lang="en"
+      className={`${onest.variable} ${plexMono.variable} h-full bg-carbon`}
     >
-      <body className="min-h-full flex flex-col bg-carbon text-fg">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="min-h-full flex flex-col text-fg">
+        <VideoBackground />
+        {children}
       </body>
     </html>
   );

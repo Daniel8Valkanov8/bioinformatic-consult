@@ -1,78 +1,96 @@
 /**
- * HeroVisual — ИЗОЛИРАН СЛОТ за hero визуализацията.
+ * HeroVisual — СИГНАТУРНИЯТ елемент на началната страница.
  * --------------------------------------------------------------------------
- * Засега показва статичен градиент + финен био-мотив (решетка/глоу).
+ * Идея: „детерминизъм, направен видим". Целият оферта на консултанта е
+ * анализ, който можеш да ВЪЗПРОИЗВЕДЕШ и ЗАЩИТИШ. Затова визуалът не е
+ * декоративна ДНК спирала, а provenance отчет: един и същ pipeline, пуснат
+ * два пъти върху едни и същи данни, дава един и същ контролен сбор (sha256)
+ * → identical · защитим пред одитор.
  *
- * ГОТОВНОСТ ЗА 3D (фаза 2): когато се добави Three.js / R3F сцена, СМЕНЯ СЕ
- * САМО ВЪТРЕШНОСТТА на този компонент — останалият сайт остава непроменен.
- * R3F компонентът ТРЯБВА да се зарежда с next/dynamic и { ssr: false },
- * защото проектът е статичен експорт (output: 'export'). Пример:
+ * Долу: реална нуклеотидна секвенция в base-call цветовете (A/T/G/C) —
+ * единственото място, където се показва пълният ATGC код.
  *
- *   // const HeroScene = dynamic(() => import("./HeroScene"), { ssr: false });
- *   // ... и вътре в контейнера по-долу: <HeroScene />
- *
- * Контейнерът (aspect ratio, позициониране) остава същият, така че смяната
- * на статичното съдържание с 3D е минимална промяна.
+ * Сървърен компонент: единственото движение е CSS скенлайн (.prov-scan),
+ * който зачита prefers-reduced-motion.
  */
+
+const BASE_COLOR: Record<string, string> = {
+  A: "text-base-a",
+  T: "text-base-t",
+  G: "text-base-g",
+  C: "text-base-c",
+};
+
+// Фиксирана секвенция → детерминирани цветове (none е случайно).
+const SEQUENCE = "ATGCAAGTCCGTTAGCATGCTTACG".split("");
+
+// Един и същ контролен сбор за двата пробега = възпроизводимост.
+const CHECKSUM = "a3f1·9c20·ee47";
+
+function ProvRow({ label }: { label: string }) {
+  return (
+    <div className="flex items-center justify-between gap-3 py-2">
+      <span className="font-mono text-xs text-faint">{label}</span>
+      <span className="flex items-center gap-2 font-mono text-xs text-muted">
+        sha256 {CHECKSUM}
+        <span aria-hidden="true" className="text-helix">
+          ✓
+        </span>
+      </span>
+    </div>
+  );
+}
+
 export function HeroVisual() {
   return (
-    <div
-      aria-hidden="true"
-      className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl border border-line bg-surface"
-    >
-      {/* Базов градиент (графит → лек циан) */}
-      <div className="absolute inset-0 bg-gradient-to-br from-surface-2 via-carbon to-carbon" />
+    <div className="relative w-full max-w-md">
+      {/* Меко дуо-тон свечение зад панела */}
+      <div className="bio-glow pointer-events-none absolute -inset-6" />
 
-      {/* Финна био-решетка */}
-      <div className="bio-grid absolute inset-0" />
-
-      {/* Меко био-свечение */}
-      <div className="bio-glow absolute inset-0" />
-
-      {/* Дискретен ДНК/мрежов мотив (SVG плейсхолдър до 3D сцената) */}
-      <svg
-        viewBox="0 0 200 200"
-        className="absolute inset-0 h-full w-full opacity-70"
-        fill="none"
-      >
-        {/* Две ДНК нишки */}
-        <path
-          d="M70 10 C 110 50, 110 50, 70 90 C 30 130, 30 130, 70 170 C 90 188, 90 188, 70 198"
-          stroke="rgba(79,224,196,0.45)"
-          strokeWidth="1.5"
+      <div className="relative overflow-hidden rounded-2xl border border-line bg-surface/70 backdrop-blur-sm">
+        {/* Скенлайн — минава веднъж при зареждане (намек за инструментален отчет) */}
+        <div
+          aria-hidden="true"
+          className="prov-scan pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-signal/15 to-transparent"
         />
-        <path
-          d="M130 10 C 90 50, 90 50, 130 90 C 170 130, 170 130, 130 170 C 110 188, 110 188, 130 198"
-          stroke="rgba(170,179,191,0.4)"
-          strokeWidth="1.5"
-        />
-        {/* "Стъпала" между нишките */}
-        {Array.from({ length: 9 }).map((_, i) => {
-          const y = 14 + i * 20;
-          return (
-            <line
-              key={i}
-              x1={i % 2 === 0 ? 78 : 86}
-              y1={y}
-              x2={i % 2 === 0 ? 122 : 114}
-              y2={y}
-              stroke="rgba(79,224,196,0.25)"
-              strokeWidth="1.2"
-            />
-          );
-        })}
-        {/* Възли (микробен/мрежов мотив) */}
-        {[
-          [70, 10],
-          [70, 90],
-          [70, 170],
-          [130, 10],
-          [130, 90],
-          [130, 170],
-        ].map(([cx, cy], i) => (
-          <circle key={i} cx={cx} cy={cy} r="3" fill="rgba(79,224,196,0.7)" />
-        ))}
-      </svg>
+
+        {/* Заглавна лента на панела */}
+        <div className="flex items-center gap-2 border-b border-line/70 px-5 py-3">
+          <span className="h-2 w-2 rounded-full bg-helix shadow-[0_0_10px_2px_rgba(63,209,126,0.55)]" />
+          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-faint">
+            provenance · pipeline run
+          </span>
+        </div>
+
+        {/* Двата пробега + резултат */}
+        <div className="px-5 py-4">
+          <ProvRow label="run #1" />
+          <div className="border-t border-line/50" />
+          <ProvRow label="run #2" />
+
+          <div className="mt-3 flex items-center justify-between rounded-lg border border-helix/30 bg-helix/5 px-3 py-2.5">
+            <span className="font-mono text-xs text-helix">identical</span>
+            <span className="text-xs text-muted">възпроизводимо · защитимо</span>
+          </div>
+        </div>
+
+        {/* base-call секвенция — единственото място с пълния ATGC код */}
+        <div className="border-t border-line/70 px-5 py-3">
+          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-faint">
+            base call
+          </p>
+          <p
+            className="font-mono text-sm leading-none tracking-[0.18em]"
+            aria-hidden="true"
+          >
+            {SEQUENCE.map((nt, i) => (
+              <span key={i} className={BASE_COLOR[nt]}>
+                {nt}
+              </span>
+            ))}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,12 +1,19 @@
+"use client";
+
+import type { CSSProperties } from "react";
 import { Section, SectionHeader } from "@/components/Section";
 import { ContactForm } from "@/components/ContactForm";
-import { bg } from "@/content/bg";
+import { useDict } from "@/content/LocaleProvider";
 import { site } from "@/lib/site";
 
 export function ContactSection() {
-  const t = bg.contact;
+  const t = useDict().contact;
   return (
-    <Section id="kontakt" className="border-t border-line/60">
+    <Section
+      id="contact"
+      className="slide border-t border-line/60"
+      containerClassName="slide-fit"
+    >
       <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
         <div>
           <SectionHeader
@@ -15,7 +22,7 @@ export function ContactSection() {
             lead={t.lead}
           />
 
-          <div className="mt-8">
+          <div data-reveal className="mt-6">
             <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-faint">
               {t.directTitle}
             </h3>
@@ -25,7 +32,7 @@ export function ContactSection() {
                 <dd>
                   <a
                     href={`mailto:${site.email}`}
-                    className="text-fg transition-colors hover:text-bio"
+                    className="text-fg transition-colors hover:text-signal"
                   >
                     {site.email}
                   </a>
@@ -36,7 +43,7 @@ export function ContactSection() {
                 <dd>
                   <a
                     href={`tel:${site.phone}`}
-                    className="text-fg transition-colors hover:text-bio"
+                    className="text-fg transition-colors hover:text-signal"
                   >
                     {site.phoneDisplay}
                   </a>
@@ -46,7 +53,9 @@ export function ContactSection() {
           </div>
         </div>
 
-        <ContactForm />
+        <div data-reveal style={{ "--reveal-delay": "120ms" } as CSSProperties}>
+          <ContactForm />
+        </div>
       </div>
     </Section>
   );

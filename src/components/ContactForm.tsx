@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { bg } from "@/content/bg";
+import { useDict } from "@/content/LocaleProvider";
 
 const FORM_NAME = "contact";
 
@@ -13,10 +13,10 @@ function encode(data: Record<string, string>) {
 }
 
 export function ContactForm() {
-  const t = bg.contact.form;
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
-    "idle",
-  );
+  const t = useDict().contact.form;
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -44,8 +44,8 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-bio/40 bg-surface p-8 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-bio/15 text-2xl text-bio">
+      <div className="rounded-2xl border border-helix/40 bg-surface p-8 text-center">
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-helix/15 text-2xl text-helix">
           ✓
         </div>
         <p className="text-lg text-fg">{t.success}</p>
@@ -60,7 +60,7 @@ export function ContactForm() {
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl border border-line bg-surface/60 p-6 sm:p-8"
+      className="space-y-4 rounded-2xl border border-line bg-surface/80 p-6"
     >
       {/* Скрити полета, нужни на Netlify Forms */}
       <input type="hidden" name="form-name" value={FORM_NAME} />
@@ -70,7 +70,7 @@ export function ContactForm() {
         </label>
       </p>
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field id="name" label={t.name} required>
           <input
             id="name"
@@ -126,25 +126,20 @@ export function ContactForm() {
           id="message"
           name="message"
           required
-          rows={5}
+          rows={3}
           placeholder={t.messagePlaceholder}
           className={`${inputClass} resize-y`}
         />
       </Field>
 
-      {status === "error" && (
-        <p className="text-sm text-red-400">
-          Възникна грешка при изпращането. Опитайте отново или ни пишете директно
-          по имейл.
-        </p>
-      )}
+      {status === "error" && <p className="text-sm text-red-400">{t.error}</p>}
 
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-lg bg-bio px-6 py-3 text-sm font-semibold text-carbon transition-colors hover:bg-bio-soft disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="w-full rounded-lg bg-signal px-6 py-3 text-sm font-semibold text-carbon transition-colors hover:bg-signal-soft disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
-        {status === "submitting" ? "Изпращане…" : t.submit}
+        {status === "submitting" ? t.submitting : t.submit}
       </button>
 
       <p className="text-xs text-faint">{t.privacyNote}</p>
@@ -153,7 +148,7 @@ export function ContactForm() {
 }
 
 const inputClass =
-  "w-full rounded-lg border border-line bg-carbon px-4 py-3 text-sm text-fg placeholder:text-faint outline-none transition-colors focus:border-bio/60";
+  "w-full rounded-lg border border-line bg-carbon px-4 py-3 text-sm text-fg placeholder:text-faint outline-none transition-colors focus:border-signal/60";
 
 function Field({
   id,
@@ -170,7 +165,7 @@ function Field({
     <div>
       <label htmlFor={id} className="mb-1.5 block text-sm text-muted">
         {label}
-        {required && <span className="ml-0.5 text-bio">*</span>}
+        {required && <span className="ml-0.5 text-signal">*</span>}
       </label>
       {children}
     </div>

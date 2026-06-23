@@ -1,30 +1,54 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
-import { bg } from "@/content/bg";
+import { getDictionary, localizePath } from "@/content";
 
 export const dynamic = "force-static";
 
+const PATHS = [
+  "/",
+  "/services/",
+  "/portfolio/",
+  "/about/",
+  "/blog/",
+  "/contact/",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = [
-    "/",
-    "/uslugi/",
-    "/portfolio/",
-    "/za-men/",
-    "/blog/",
-    "/kontakt/",
-  ].map((path) => ({
-    url: `${site.url}${path}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: path === "/" ? 1 : 0.7,
-  }));
+  const abs = (p: string) => `${site.url}${p}`;
+  const entries: MetadataRoute.Sitemap = [];
 
-  const blogRoutes = bg.blog.posts.map((post) => ({
-    url: `${site.url}/blog/${post.slug}/`,
-    lastModified: new Date(post.date),
-    changeFrequency: "yearly" as const,
-    priority: 0.6,
-  }));
+  const addPair = (
+    path: string,
+    lastModified: Date,
+    changeFrequency: "monthly" | "yearly",
+    priorityEn: number,
+  ) => {
+    const enUrl = abs(localizePath("en", path));
+    const bgUrl = abs(localizePath("bg", path));
+    const languages = { en: enUrl, bg: bgUrl };
+    entries.push({
+      url: enUrl,
+      lastModified,
+      changeFrequency,
+      priority: priorityEn,
+      alternates: { languages },
+    });
+    entries.push({
+      url: bgUrl,
+      lastModified,
+      changeFrequency,
+      priority: Math.max(priorityEn - 0.1, 0.1),
+      alternates: { languages },
+    });
+  };
 
-  return [...staticRoutes, ...blogRoutes];
+  for (const path of PATHS) {
+    addPair(path, new Date(), "monthly", path === "/" ? 1 : 0.7);
+  }
+
+  for (const post of getDictionary("en").blog.posts) {
+    addPair(`/blog/${post.slug}/`, new Date(post.date), "yearly", 0.6);
+  }
+
+  return entries;
 }

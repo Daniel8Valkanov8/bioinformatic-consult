@@ -1,36 +1,62 @@
+"use client";
+
+import type { CSSProperties } from "react";
 import { Container } from "@/components/Container";
 import { CTAButton } from "@/components/CTAButton";
 import { HeroVisual } from "@/components/HeroVisual";
-import { bg } from "@/content/bg";
+import { useDict, useHref } from "@/content/LocaleProvider";
 
 export function Hero() {
-  const t = bg.hero;
+  const t = useDict().hero;
+  const href = useHref();
   return (
-    <section className="relative overflow-hidden">
+    <section id="nachalo" className="slide relative overflow-hidden">
       {/* Финно фоново био-свечение */}
       <div className="bio-glow pointer-events-none absolute inset-x-0 top-0 h-[480px]" />
-      <Container className="relative grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+      <Container className="slide-fit relative grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
         <div>
-          <p className="mb-4 font-mono text-sm uppercase tracking-[0.2em] text-bio">
-            {t.eyebrow}
+          {/* Eyebrow в дуо-тона: биология (зелено) × софтуер (синьо) */}
+          <p
+            data-reveal
+            className="mb-4 font-mono text-sm uppercase tracking-[0.22em]"
+          >
+            <span className="text-helix">{t.eyebrowBiology}</span>
+            <span className="mx-2 text-faint">×</span>
+            <span className="text-signal">{t.eyebrowSoftware}</span>
           </p>
-          <h1 className="text-balance text-3xl font-semibold leading-tight tracking-tight text-fg sm:text-4xl lg:text-[2.75rem]">
+          <h1
+            data-reveal
+            style={{ "--reveal-delay": "90ms" } as CSSProperties}
+            className="text-balance font-display text-2xl font-bold leading-[1.15] tracking-tight text-fg sm:text-3xl lg:text-[2.15rem]"
+          >
             {t.title}
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+          <p
+            data-reveal
+            style={{ "--reveal-delay": "170ms" } as CSSProperties}
+            className="mt-5 max-w-xl text-base leading-relaxed text-muted lg:text-lg"
+          >
             {t.subtitle}
           </p>
 
-          <div className="mt-9 flex flex-wrap gap-3">
-            <CTAButton href="/kontakt/" variant="primary">
+          <div
+            data-reveal
+            style={{ "--reveal-delay": "250ms" } as CSSProperties}
+            className="mt-7 flex flex-wrap gap-3"
+          >
+            <CTAButton href={href("/contact/")} variant="primary">
               {t.primaryCta}
             </CTAButton>
-            <CTAButton href="/#uslugi" variant="secondary">
+            <CTAButton href="#services" variant="secondary">
               {t.secondaryCta}
             </CTAButton>
           </div>
 
-          <ul className="mt-10 flex flex-wrap gap-2">
+          <ul
+            data-reveal
+            style={{ "--reveal-delay": "320ms" } as CSSProperties}
+            className="mt-8 flex flex-wrap gap-2"
+          >
             {t.badges.map((badge) => (
               <li
                 key={badge}
@@ -42,8 +68,13 @@ export function Hero() {
           </ul>
         </div>
 
-        {/* Изолиран слот за бъдещо 3D */}
-        <div className="flex justify-center lg:justify-end">
+        {/* Сигнатурният provenance панел — влиза отстрани */}
+        <div
+          data-reveal
+          data-reveal-x
+          style={{ "--reveal-delay": "200ms" } as CSSProperties}
+          className="flex justify-center lg:justify-end"
+        >
           <HeroVisual />
         </div>
       </Container>
