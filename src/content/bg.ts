@@ -421,7 +421,7 @@ export const bg = {
       },
       services: { pregled: "Преглед", zayavka: "Заявка" },
       about: { profil: "Профил", podhod: "Подход", poveritelnost: "Поверителност" },
-      portfolio: { pregled: "Преглед", case: "Case study" },
+      portfolio: { pregled: "Преглед", case: "GNN" },
       contact: { kontakt: "Контакт", zapitvane: "Запитване" },
       blog: { blog: "Блог", statii: "Статии" },
     },

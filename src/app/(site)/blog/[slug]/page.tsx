@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlogPostView } from "@/views/BlogPostView";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { buildBlogPostMetadata } from "@/lib/metadata";
+import { blogPostingSchema, breadcrumbSchema } from "@/lib/schema";
 import { getDictionary } from "@/content";
 
 const LOCALE = "en" as const;
@@ -26,7 +28,19 @@ export default async function Page({
   params: Promise<Params>;
 }) {
   const { slug } = await params;
-  const post = getDictionary(LOCALE).blog.posts.find((p) => p.slug === slug);
+  const dict = getDictionary(LOCALE);
+  const post = dict.blog.posts.find((p) => p.slug === slug);
   if (!post) notFound();
-  return <BlogPostView slug={slug} />;
+  const trail = [
+    { name: dict.brand.name, path: "/" },
+    { name: dict.blog.title, path: "/blog/" },
+    { name: post.title, path: `/blog/${post.slug}/` },
+  ];
+  return (
+    <>
+      <JsonLd data={blogPostingSchema(LOCALE, post)} />
+      <JsonLd data={breadcrumbSchema(LOCALE, trail)} />
+      <BlogPostView slug={slug} />
+    </>
+  );
 }

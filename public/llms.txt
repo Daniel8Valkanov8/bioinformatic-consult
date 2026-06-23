@@ -1,0 +1,36 @@
+# Daniel Valkanov — Bioinformatics Consultant
+
+> Independent bioinformatics consultant helping research teams and laboratories
+> extract reliable, reproducible results from their NGS and omics data — without
+> hiring an in-house bioinformatician. A rare combination of molecular biology and
+> software engineering: analysis you can reproduce and defend.
+
+## Services
+- 16S/ITS metagenomic analysis + publication-ready, interpretable report
+- Secondary NGS analysis (WES / targeted panels) + clinically interpretable report with ACMG classification (technical analysis only — not a medical diagnosis)
+- Reproducible pipelines (Nextflow / Snakemake, Docker / Singularity)
+
+## Who it is for
+Agricultural institutes, veterinary and food laboratories, academic groups, and
+small or new genetic laboratories without an in-house bioinformatician.
+
+## Key pages
+- Home (English): https://daniel-valkanov.netlify.app/
+- Services: https://daniel-valkanov.netlify.app/services/
+- Portfolio (GNN case study): https://daniel-valkanov.netlify.app/portfolio/
+- About: https://daniel-valkanov.netlify.app/about/
+- Blog: https://daniel-valkanov.netlify.app/blog/
+- Contact: https://daniel-valkanov.netlify.app/contact/
+
+## Languages
+- English (default): site root, e.g. /services/
+- Bulgarian: /bg/ prefix, e.g. /bg/services/
+
+## Contact
+- Email: daniel8valkanov8@gmail.com
+- Phone: +359 89 842 5547
+
+## Notes
+- Pricing is individual per project scope; a free initial consultation is offered.
+- Confidentiality: NDA on request, isolated environment, GDPR-compliant, data not used to train AI models.
+- Update the domain in this file once a custom domain is purchased.
