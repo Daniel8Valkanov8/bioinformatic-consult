@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { CTAButton } from "@/components/CTAButton";
 import { DeckShell } from "@/components/DeckShell";
 import { Slide } from "@/components/Slide";
@@ -13,6 +14,24 @@ function Block({ title, text }: { title: string; text: string }) {
         {title}
       </p>
       <p className="text-sm leading-relaxed text-muted">{text}</p>
+    </div>
+  );
+}
+
+/** Компактен блок за TR-Viewer: ляв неонов акцент + плътна типография. */
+function TrBlock({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="border-l-2 border-signal/30 pl-3.5">
+      <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-signal">
+        {label}
+      </p>
+      {children}
     </div>
   );
 }
@@ -78,79 +97,77 @@ export function PortfolioView() {
       {/* Case study — TR-Viewer (различен проект; същата визуална обвивка) */}
       <Slide id="trviewer">
         <article className="overflow-hidden rounded-2xl border border-line bg-carbon/80">
-          <div className="bio-grid border-b border-line/60 p-6 sm:p-8">
-            <div className="grid items-center gap-6 lg:grid-cols-[1.65fr_1fr] lg:gap-10">
+          <div className="bio-grid border-b border-line/60 px-6 py-5 sm:px-8">
+            <div className="grid items-center gap-5 lg:grid-cols-[1.7fr_1fr] lg:gap-10">
               <div>
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-signal">
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-signal">
                   {tr.tag}
                 </p>
-                <h2 className="mt-2.5 max-w-2xl text-lg font-semibold leading-snug text-fg sm:text-2xl">
+                <h2 className="mt-2 max-w-2xl text-lg font-semibold leading-tight text-fg sm:text-xl lg:text-[1.4rem]">
                   {tr.title}
                 </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+                <p className="mt-2 max-w-2xl text-[13px] leading-snug text-muted">
                   {tr.intro}
                 </p>
               </div>
               {/* Дискретна SVG йерархия на модела данни (в хедъра, вдясно) */}
               <div className="hidden justify-center lg:flex">
-                <TeHierarchy levels={tr.hierarchy} />
+                <div className="w-full max-w-[210px]">
+                  <TeHierarchy levels={tr.hierarchy} />
+                </div>
               </div>
             </div>
           </div>
 
-          {/* 4-те блока в един хоризонтален ред → нисък слайд, без вътрешен скрол */}
-          <div className="grid gap-x-8 gap-y-6 p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-4">
-            <Block title={blockLabels.problem} text={tr.problem} />
+          {/* Плътен „spec sheet" ред: 4 блока с ляв неонов акцент, компактна
+              типография → слайдът остава нисък и се събира без вътрешен скрол. */}
+          <div className="grid gap-x-7 gap-y-5 px-6 py-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-4">
+            <TrBlock label={blockLabels.problem}>
+              <p className="text-[12.5px] leading-[1.5] text-muted">{tr.problem}</p>
+            </TrBlock>
 
-            <div>
-              <p className="mb-1.5 font-mono text-xs uppercase tracking-[0.15em] text-signal">
-                {blockLabels.solution}
-              </p>
-              <p className="text-sm leading-relaxed text-muted">{tr.solution}</p>
-              <ul className="mt-3 flex flex-wrap gap-2">
+            <TrBlock label={blockLabels.solution}>
+              <p className="text-[12.5px] leading-[1.5] text-muted">{tr.solution}</p>
+              <ul className="mt-2.5 flex flex-wrap gap-1.5">
                 {tr.tech.map((item) => (
                   <li
                     key={item}
-                    className="rounded-full border border-line bg-surface/60 px-2.5 py-1 font-mono text-[11px] text-muted"
+                    className="rounded-full border border-line bg-surface/60 px-2 py-0.5 font-mono text-[10px] text-muted"
                   >
                     {item}
                   </li>
                 ))}
               </ul>
-            </div>
+            </TrBlock>
 
-            <div>
-              <p className="mb-1.5 font-mono text-xs uppercase tracking-[0.15em] text-signal">
-                {blockLabels.results}
-              </p>
-              <p className="text-sm leading-relaxed text-muted">
+            <TrBlock label={blockLabels.results}>
+              <p className="text-[12.5px] leading-[1.5] text-muted">
                 {tr.resultsIntro}
               </p>
-              <ul className="mt-2.5 space-y-2">
+              <ul className="mt-2 space-y-1.5">
                 {tr.results.map((item) => (
-                  <li
-                    key={item}
-                    className="flex gap-2 text-sm leading-relaxed text-muted"
-                  >
-                    <span aria-hidden="true" className="mt-1 text-signal">
+                  <li key={item} className="text-[12px] leading-[1.45] text-muted">
+                    <span aria-hidden="true" className="mr-1 text-signal">
                       ▸
                     </span>
-                    <span>{item}</span>
+                    {item}
                   </li>
                 ))}
               </ul>
-            </div>
+            </TrBlock>
 
-            <Block title={blockLabels.why} text={tr.why} />
+            <TrBlock label={blockLabels.why}>
+              <p className="text-[12.5px] leading-[1.5] text-muted">{tr.why}</p>
+            </TrBlock>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line/60 px-6 py-4 sm:px-8">
-            <p className="text-xs italic text-faint">{tr.note}</p>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line/60 px-6 py-3 sm:px-8">
+            <p className="text-[11px] italic text-faint">{tr.note}</p>
             <a
               href={tr.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-lg border border-line bg-surface/60 px-5 py-2.5 text-sm text-fg transition-colors duration-200 hover:border-signal/60 hover:text-signal"
+              className="inline-flex items-center justify-center rounded-lg border border-line bg-surface/60 px-4 py-2 text-[13px] text-fg transition-colors duration-200 hover:border-signal/60 hover:text-signal"
             >
               {tr.cta}
             </a>
