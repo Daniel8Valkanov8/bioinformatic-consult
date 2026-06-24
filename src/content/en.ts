@@ -64,7 +64,7 @@ export const en: Content = {
     title:
       "I help research teams and laboratories extract reliable, reproducible results from their NGS and omics data — without hiring an in-house bioinformatician.",
     subtitle:
-      "A consultant at the intersection of molecular biology and software engineering. Analysis you can reproduce and defend.",
+      "A bioinformatician at the intersection of biology and software engineering. Analysis you can reproduce and defend.",
     primaryCta: "Get in touch",
     secondaryCta: "See the services",
     badges: ["Metagenomics 16S/ITS", "Secondary NGS analysis", "Nextflow / Docker"],
@@ -273,7 +273,7 @@ export const en: Content = {
   about: {
     title: "About me",
     intro:
-      "My name is Daniel Valkanov. I work at the intersection of molecular biology and software engineering — a rare combination that lets me not just analyze biological data, but build analytical systems you can trust.",
+      "My name is Daniel Valkanov. I work as a bioinformatician, at the intersection of biology and software engineering — a rare combination that lets me not just analyze biological data, but build analytical systems you can trust.",
     educationTitle: "Education and background",
     education: [
       "BSc in Bioinformatics (University of Plovdiv)",
