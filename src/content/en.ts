@@ -177,6 +177,31 @@ export const en: Content = {
         note: "Published with academic approval.",
       },
     ],
+    // Second case study (different project): TR-Viewer — bespoke software.
+    trViewer: {
+      tag: "Software engineering × Genomics",
+      title: "TR-Viewer — a tool for analyzing and visualizing transposons",
+      intro:
+        "When the existing transposon-analysis tools turned out to be gene-centric and inflexible, I built my own — desktop software that works with BED files and gives both a local and a genome-wide view of transposon composition.",
+      problem:
+        "The available solutions (RepeatMasker, Censor, TranspoGene) are gene-centric, make a systemic view hard, are limited in volume or are no longer maintained. There was no tool for flexible analysis of transposon combinations at local and global scale.",
+      solution:
+        "I built TR-Viewer in Java (Swing GUI, Maven, ChartX for visualization). The software reads a BED file and automatically builds an internal relational database through CRUD operations, modeling the hierarchy Gene → Transcript → Transposon → Copy. Lightweight and fast, with a local view (TEs in a specific gene) and a global one (all copies of a given transposon across the genome).",
+      tech: ["Java", "Swing", "Maven", "ChartX", "BED format", "OOP architecture"],
+      resultsIntro:
+        "As a demonstration, I analyzed the transposons in the 5'UTR regions of human genes — 2,865 genes, 6,809 transcripts, 4,662 transposon copies.",
+      results: [
+        "CYRIB: a gene with 104 TE copies, stably included across all 50+ transcript variants — a strong signal of likely exaptation, unpredicted by existing databases.",
+        "Transposon enrichment in 5'UTRs among genes linked to brain and prostate cancer — particularly in genes with an unfavorable prognosis.",
+        "STRING analysis connected these genes to the ErbB signaling pathway and Zinc Finger transcription factors.",
+      ],
+      why:
+        "TR-Viewer shows the ability to spot a gap in the available tooling and build a reliable, reproducible software solution from scratch — with the same engineering discipline I bring to NGS pipelines and analysis automation.",
+      hierarchy: ["Gene", "Transcript", "Transposon", "Copy"],
+      cta: "View the project on GitHub →",
+      githubUrl: "https://github.com/Daniel8Valkanov8/TR-Viewer-Final",
+      note: "Developed as a diploma thesis, University of Plovdiv. Results are shared with academic consent.",
+    },
   },
 
   /* ---------------------------------------------------------------- TRUST / PILOT */
@@ -399,6 +424,8 @@ export const en: Content = {
       approach: "Approach",
       result: "Result",
       why: "Why it matters",
+      solution: "Solution",
+      results: "Results",
     },
     rail: {
       home: {
@@ -410,7 +437,7 @@ export const en: Content = {
       },
       services: { pregled: "Overview", zayavka: "Request" },
       about: { profil: "Profile", podhod: "Approach", poveritelnost: "Confidentiality" },
-      portfolio: { pregled: "Overview", case: "GNN" },
+      portfolio: { pregled: "Overview", case: "GNN", trviewer: "TR-Viewer" },
       contact: { kontakt: "Contact", zapitvane: "Inquiry" },
       blog: { blog: "Blog", statii: "Articles" },
     },
