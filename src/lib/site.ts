@@ -10,6 +10,8 @@ export const site = {
   email: "daniel8valkanov8@gmail.com",
   phone: "+359898425547",
   phoneDisplay: "+359 89 842 5547",
+  linkedin: "https://www.linkedin.com/in/daniel-valkanov-a4b76221b/",
+  github: "https://github.com/Daniel8Valkanov8",
 } as const;
 
 /**

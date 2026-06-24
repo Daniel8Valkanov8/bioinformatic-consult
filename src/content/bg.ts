@@ -238,6 +238,7 @@ export const bg = {
     directTitle: "Директен контакт",
     emailLabel: "Имейл",
     phoneLabel: "Телефон",
+    socialTitle: "Профили",
     form: {
       name: "Име",
       namePlaceholder: "Вашето име",
