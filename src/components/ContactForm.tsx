@@ -66,7 +66,7 @@ export function ContactForm() {
       <input type="hidden" name="form-name" value={FORM_NAME} />
       <p className="hidden">
         <label>
-          Не попълвайте това поле: <input name="bot-field" />
+          {t.botField}: <input name="bot-field" />
         </label>
       </p>
 

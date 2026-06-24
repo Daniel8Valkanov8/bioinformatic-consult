@@ -257,6 +257,7 @@ export const en: Content = {
       error:
         "Something went wrong while sending. Please try again or email us directly.",
       privacyNote: "The form data is used only to respond to your inquiry.",
+      botField: "Do not fill out this field",
     },
   },
 
