@@ -16,15 +16,18 @@ import { HorizontalDeck } from "./HorizontalDeck";
 export function DeckShell({
   slides,
   children,
+  lockSlides = false,
 }: {
   slides: readonly RailSlide[];
   children: ReactNode;
+  /** true само за началната — слайдовете остават фиксиран екран на телефон. */
+  lockSlides?: boolean;
 }) {
   return (
     <>
       <MotionProvider />
       <SectionRail slides={slides} />
-      <HorizontalDeck>{children}</HorizontalDeck>
+      <HorizontalDeck lockSlides={lockSlides}>{children}</HorizontalDeck>
     </>
   );
 }

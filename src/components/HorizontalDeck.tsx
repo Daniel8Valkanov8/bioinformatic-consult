@@ -19,7 +19,15 @@ import { useEffect, useRef, type ReactNode } from "react";
  * на <html> (виж globals.css); чисти се при размонтиране → вътрешните
  * страници остават нормални.
  */
-export function HorizontalDeck({ children }: { children: ReactNode }) {
+export function HorizontalDeck({
+  children,
+  lockSlides = false,
+}: {
+  children: ReactNode;
+  /** Началната: слайдовете остават фиксиран екран (както сега). Вътрешните
+   *  страници (default): на телефон растат и се скролват, без отрязване. */
+  lockSlides?: boolean;
+}) {
   const deckRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,6 +36,7 @@ export function HorizontalDeck({ children }: { children: ReactNode }) {
 
     const root = document.documentElement;
     root.classList.add("home-deck");
+    if (lockSlides) root.classList.add("deck-locked");
 
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -223,8 +232,9 @@ export function HorizontalDeck({ children }: { children: ReactNode }) {
       if (raf) cancelAnimationFrame(raf);
       window.clearTimeout(hashTimer);
       root.classList.remove("home-deck");
+      root.classList.remove("deck-locked");
     };
-  }, []);
+  }, [lockSlides]);
 
   return (
     <div ref={deckRef} data-deck className="deck">

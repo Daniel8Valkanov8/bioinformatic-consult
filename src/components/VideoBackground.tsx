@@ -156,7 +156,7 @@ export function VideoBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-carbon"
+      className="video-bg pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-carbon"
     >
       {/* Десктоп: 1280×720 landscape. Телефон: 720×1280 portrait. */}
       <video
