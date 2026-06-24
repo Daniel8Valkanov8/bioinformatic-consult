@@ -2,6 +2,7 @@
 
 import { ContactForm } from "@/components/ContactForm";
 import { DeckShell } from "@/components/DeckShell";
+import { SocialLinks } from "@/components/SocialLinks";
 import { Slide } from "@/components/Slide";
 import { useDict } from "@/content/LocaleProvider";
 import { site } from "@/lib/site";
@@ -58,6 +59,13 @@ export function ContactView() {
               </dd>
             </div>
           </dl>
+
+          <div className="mt-6">
+            <h2 className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-faint">
+              {t.socialTitle}
+            </h2>
+            <SocialLinks />
+          </div>
 
           <div className="mt-6 max-w-xl rounded-2xl border border-line bg-carbon/80 p-5">
             <p className="text-sm leading-relaxed text-muted">

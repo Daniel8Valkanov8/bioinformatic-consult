@@ -233,6 +233,7 @@ export const en: Content = {
     directTitle: "Direct contact",
     emailLabel: "Email",
     phoneLabel: "Phone",
+    socialTitle: "Profiles",
     form: {
       name: "Name",
       namePlaceholder: "Your name",

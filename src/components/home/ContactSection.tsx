@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { Section, SectionHeader } from "@/components/Section";
 import { ContactForm } from "@/components/ContactForm";
+import { SocialLinks } from "@/components/SocialLinks";
 import { useDict } from "@/content/LocaleProvider";
 import { site } from "@/lib/site";
 
@@ -50,6 +51,13 @@ export function ContactSection() {
                 </dd>
               </div>
             </dl>
+
+            <div className="mt-6">
+              <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-faint">
+                {t.socialTitle}
+              </h3>
+              <SocialLinks />
+            </div>
           </div>
         </div>
 
