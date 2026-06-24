@@ -97,16 +97,16 @@ export function PortfolioView() {
       {/* Case study — TR-Viewer (различен проект; същата визуална обвивка) */}
       <Slide id="trviewer">
         <article className="overflow-hidden rounded-2xl border border-line bg-carbon/80">
-          <div className="bio-grid border-b border-line/60 px-6 py-5 sm:px-8">
+          <div className="bio-grid border-b border-line/60 px-6 py-4 sm:px-8">
             <div className="grid items-center gap-5 lg:grid-cols-[1.7fr_1fr] lg:gap-10">
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-signal">
                   {tr.tag}
                 </p>
-                <h2 className="mt-2 max-w-2xl text-lg font-semibold leading-tight text-fg sm:text-xl lg:text-[1.4rem]">
+                <h2 className="mt-1.5 max-w-2xl text-lg font-semibold leading-tight text-fg sm:text-xl lg:text-[1.4rem]">
                   {tr.title}
                 </h2>
-                <p className="mt-2 max-w-2xl text-[13px] leading-snug text-muted">
+                <p className="mt-1.5 max-w-2xl text-[13px] leading-snug text-muted">
                   {tr.intro}
                 </p>
               </div>
@@ -121,7 +121,7 @@ export function PortfolioView() {
 
           {/* Плътен „spec sheet" ред: 4 блока с ляв неонов акцент, компактна
               типография → слайдът остава нисък и се събира без вътрешен скрол. */}
-          <div className="grid gap-x-7 gap-y-5 px-6 py-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-4">
+          <div className="grid gap-x-7 gap-y-4 px-6 py-4 sm:grid-cols-2 sm:px-8 lg:grid-cols-4">
             <TrBlock label={blockLabels.problem}>
               <p className="text-[12.5px] leading-[1.5] text-muted">{tr.problem}</p>
             </TrBlock>
@@ -144,7 +144,7 @@ export function PortfolioView() {
               <p className="text-[12.5px] leading-[1.5] text-muted">
                 {tr.resultsIntro}
               </p>
-              <ul className="mt-2 space-y-1.5">
+              <ul className="mt-2 space-y-1">
                 {tr.results.map((item) => (
                   <li key={item} className="text-[12px] leading-[1.45] text-muted">
                     <span aria-hidden="true" className="mr-1 text-signal">
@@ -161,7 +161,7 @@ export function PortfolioView() {
             </TrBlock>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line/60 px-6 py-3 sm:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line/60 px-6 py-2.5 sm:px-8">
             <p className="text-[11px] italic text-faint">{tr.note}</p>
             <a
               href={tr.githubUrl}
