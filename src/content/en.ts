@@ -62,9 +62,9 @@ export const en: Content = {
     eyebrowBiology: "Biology",
     eyebrowSoftware: "Software",
     title:
-      "I help research teams and laboratories extract reliable, reproducible results from their NGS and omics data — without hiring an in-house bioinformatician.",
+      "I help research teams and laboratories extract reliable, reproducible results from their NGS and omics data, without hiring an in-house bioinformatician.",
     subtitle:
-      "A bioinformatician at the intersection of biology and software engineering. Analysis you can reproduce and defend.",
+      "A bioinformatician who connects biology and software engineering. Analysis you can reproduce and defend.",
     primaryCta: "Get in touch",
     secondaryCta: "See the services",
     badges: ["Metagenomics 16S/ITS", "Secondary NGS analysis", "Nextflow / Docker"],
@@ -75,7 +75,7 @@ export const en: Content = {
     sectionEyebrow: "Services",
     sectionTitle: "How I help",
     sectionLead:
-      "Three clearly defined services — from raw sequencing data to an interpretable result that holds up in front of a reviewer and an auditor.",
+      "Three clearly defined services. Each takes raw sequencing data to an interpretable result that holds up in front of a reviewer and an auditor.",
     items: [
       {
         id: "metagenomika",
@@ -150,7 +150,7 @@ export const en: Content = {
       },
     ],
     differentiator:
-      "The key: not just “analysis”, but “analysis you can reproduce and defend”. This is the intersection of biology × software.",
+      "I deliver analysis you can reproduce and defend. That is where biology meets software.",
   },
 
   /* ---------------------------------------------------------------- PORTFOLIO */
@@ -273,7 +273,7 @@ export const en: Content = {
   about: {
     title: "About me",
     intro:
-      "My name is Daniel Valkanov. I work as a bioinformatician, at the intersection of biology and software engineering — a rare combination that lets me not just analyze biological data, but build analytical systems you can trust.",
+      "My name is Daniel Valkanov and I'm a bioinformatician. I work where biology meets software engineering. That lets me build analytical systems you can trust.",
     educationTitle: "Education and background",
     education: [
       "BSc in Bioinformatics (University of Plovdiv)",
@@ -354,7 +354,7 @@ export const en: Content = {
           },
           {
             type: "p",
-            text: "A well-executed analysis delivers a taxonomic composition table, key diversity figures (alpha/beta), an assessment of differential abundance and — critically — a reproducible, containerized workflow. That way your result is defensible before a reviewer and repeatable on the next batch of data.",
+            text: "A well-executed analysis delivers a taxonomic composition table, key diversity figures (alpha/beta), an assessment of differential abundance, and a reproducible, containerized workflow. That way your result stays defensible before a reviewer and repeatable on the next batch of data.",
           },
           {
             type: "h2",
