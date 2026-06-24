@@ -15,12 +15,12 @@ Agricultural institutes, veterinary and food laboratories, academic groups, and
 small or new genetic laboratories without an in-house bioinformatician.
 
 ## Key pages
-- Home (English): https://daniel-valkanov.netlify.app/
-- Services: https://daniel-valkanov.netlify.app/services/
-- Portfolio (GNN case study): https://daniel-valkanov.netlify.app/portfolio/
-- About: https://daniel-valkanov.netlify.app/about/
-- Blog: https://daniel-valkanov.netlify.app/blog/
-- Contact: https://daniel-valkanov.netlify.app/contact/
+- Home (English): https://dnv-bio-tech.netlify.app/
+- Services: https://dnv-bio-tech.netlify.app/services/
+- Portfolio (GNN case study): https://dnv-bio-tech.netlify.app/portfolio/
+- About: https://dnv-bio-tech.netlify.app/about/
+- Blog: https://dnv-bio-tech.netlify.app/blog/
+- Contact: https://dnv-bio-tech.netlify.app/contact/
 
 ## Languages
 - English (default): site root, e.g. /services/

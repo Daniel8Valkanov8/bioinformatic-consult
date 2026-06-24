@@ -5,7 +5,7 @@
  */
 export const site = {
   // ПРОМЕНИ при деплой на собствен домейн (ползва се за sitemap, OG, canonical).
-  url: "https://daniel-valkanov.netlify.app",
+  url: "https://dnv-bio-tech.netlify.app",
   name: "Daniel Valkanov",
   email: "daniel8valkanov8@gmail.com",
   phone: "+359898425547",
