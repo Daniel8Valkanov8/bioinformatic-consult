@@ -79,70 +79,69 @@ export function PortfolioView() {
       <Slide id="trviewer">
         <article className="overflow-hidden rounded-2xl border border-line bg-carbon/80">
           <div className="bio-grid border-b border-line/60 p-6 sm:p-8">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-signal">
-              {tr.tag}
-            </p>
-            <h2 className="mt-2.5 max-w-3xl text-lg font-semibold leading-snug text-fg sm:text-2xl">
-              {tr.title}
-            </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted">
-              {tr.intro}
-            </p>
-          </div>
-
-          <div className="grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.7fr_1fr] lg:gap-8">
-            {/* Текстови блокове */}
-            <div className="grid gap-5 sm:grid-cols-2">
-              <Block title={blockLabels.problem} text={tr.problem} />
-
+            <div className="grid items-center gap-6 lg:grid-cols-[1.65fr_1fr] lg:gap-10">
               <div>
-                <p className="mb-1.5 font-mono text-xs uppercase tracking-[0.15em] text-signal">
-                  {blockLabels.solution}
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-signal">
+                  {tr.tag}
                 </p>
-                <p className="text-sm leading-relaxed text-muted">{tr.solution}</p>
-                <ul className="mt-3 flex flex-wrap gap-2">
-                  {tr.tech.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-full border border-line bg-surface/60 px-3 py-1.5 font-mono text-xs text-muted"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <h2 className="mt-2.5 max-w-2xl text-lg font-semibold leading-snug text-fg sm:text-2xl">
+                  {tr.title}
+                </h2>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+                  {tr.intro}
+                </p>
               </div>
-
-              <div className="sm:col-span-2">
-                <p className="mb-1.5 font-mono text-xs uppercase tracking-[0.15em] text-signal">
-                  {blockLabels.results}
-                </p>
-                <p className="text-sm leading-relaxed text-muted">
-                  {tr.resultsIntro}
-                </p>
-                <ul className="mt-2.5 space-y-2">
-                  {tr.results.map((item) => (
-                    <li
-                      key={item}
-                      className="flex gap-2.5 text-sm leading-relaxed text-muted"
-                    >
-                      <span aria-hidden="true" className="mt-1 text-signal">
-                        ▸
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="sm:col-span-2">
-                <Block title={blockLabels.why} text={tr.why} />
+              {/* Дискретна SVG йерархия на модела данни (в хедъра, вдясно) */}
+              <div className="hidden justify-center lg:flex">
+                <TeHierarchy levels={tr.hierarchy} />
               </div>
             </div>
+          </div>
 
-            {/* Дискретна SVG йерархия на модела данни */}
-            <aside className="flex items-center justify-center rounded-xl border border-line/60 bg-surface/40 p-5">
-              <TeHierarchy levels={tr.hierarchy} />
-            </aside>
+          {/* 4-те блока в един хоризонтален ред → нисък слайд, без вътрешен скрол */}
+          <div className="grid gap-x-8 gap-y-6 p-6 sm:grid-cols-2 sm:p-8 lg:grid-cols-4">
+            <Block title={blockLabels.problem} text={tr.problem} />
+
+            <div>
+              <p className="mb-1.5 font-mono text-xs uppercase tracking-[0.15em] text-signal">
+                {blockLabels.solution}
+              </p>
+              <p className="text-sm leading-relaxed text-muted">{tr.solution}</p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {tr.tech.map((item) => (
+                  <li
+                    key={item}
+                    className="rounded-full border border-line bg-surface/60 px-2.5 py-1 font-mono text-[11px] text-muted"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className="mb-1.5 font-mono text-xs uppercase tracking-[0.15em] text-signal">
+                {blockLabels.results}
+              </p>
+              <p className="text-sm leading-relaxed text-muted">
+                {tr.resultsIntro}
+              </p>
+              <ul className="mt-2.5 space-y-2">
+                {tr.results.map((item) => (
+                  <li
+                    key={item}
+                    className="flex gap-2 text-sm leading-relaxed text-muted"
+                  >
+                    <span aria-hidden="true" className="mt-1 text-signal">
+                      ▸
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <Block title={blockLabels.why} text={tr.why} />
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line/60 px-6 py-4 sm:px-8">
